@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>低多边形城市 · Low Poly City</title>
+    <!-- 引入刚刚抽离出的 CSS 样式 -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- 引入数字孪生大屏独立的 CSS 样式 -->
+    <link rel="stylesheet" href="DataScreen/css/dashboard.css" />
+</head>
+
+<body>
+    <!-- 加载进度遮罩屏 (会在 main.js 跑完的时候将其关闭抹除) -->
+    <div id="loading">
+        <div>GENERATING WORLD</div>
+        <div class="bw">
+            <div class="bf" id="lbar"></div>
+        </div>
+    </div>
+
+    <!-- 左上角标题和特性说明区 -->
+    <div id="hud">
+        <h1>LOW · POLY · CITY</h1>
+        <span class="tag">Three.js</span><span class="tag">程序化生成</span><span class="tag">几何体合并</span>
+        <br /><br />拖拽旋转 · 滚轮缩放 · 右键平移
+    </div>
+
+    <!-- 原始的简陋 stats 牌子现在可以被注释或者移除了，因为我们要换上非常豪华的两翼全视野面板 -->
+    <!-- 
+    <div id="stats">
+        <div class="s"><span>建筑数量</span><span class="v" id="sB">-</span></div>
+        ...
+    </div>
+    -->
+
+    <!-- 【新增】数据大屏独立展示层 (架在所有内容上面，包含 Flex 布局的各种容器 ) -->
+    <div id="dashboard-layer">
+        <!-- 头部核心区 -->
+        <div class="dash-header">
+            <h1>LOW POLY CITY 数字孪生平台</h1>
+            <p>SMART CITY VISUALIZATION OS</p>
+        </div>
+
+        <!-- 大屏两翼内容区 -->
+        <div class="dash-body">
+            <!-- 左翼 -->
+            <div class="panel-side panel-left">
+                <div class="chart-box">
+                    <div class="box-title">区域用地规划配比</div>
+                    <div class="chart-content" id="c-zoning"></div>
+                </div>
+                <div class="chart-box">
+                    <div class="box-title">全市供电负荷波形</div>
+                    <div class="chart-content" id="c-power"></div>
+                </div>
+            </div>
+
+            <!-- 右翼 -->
+            <div class="panel-side panel-right">
+                <div class="chart-box">
+                    <div class="box-title">渲染引擎性能池</div>
+                    <div class="chart-content" id="c-drawcall"></div>
+                </div>
+                <div class="chart-box">
+                    <div class="box-title">干道物流分布监控</div>
+                    <div class="chart-content" id="c-traffic"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右上角：数据大屏显隐控制开关 -->
+    <div id="toggle-dashboard">隐藏大屏看板</div>
+
+    <!-- 左下角用户进行时间场景转换互动的操作板 -->
+    <div id="btns">
+        <button class="btn active" id="bDay" onclick="setTOD('day')">☀️ 白天</button>
+        <button class="btn" id="bDusk" onclick="setTOD('dusk')">🌆 黄昏</button>
+        <button class="btn" id="bNight" onclick="setTOD('night')">🌙 夜晚</button>
+    </div>
+
+    <!-- 右下角的关于鼠标滚动的操作提示语 -->
+    <div id="ctrl">鼠标拖拽 — 旋转视角<br />滚轮 — 缩放<br />右键拖拽 — 平移</div>
+
+    <!-- 接管项目的主逻辑启动 JS 文件 (底层的模型渲染基石) -->
+    <script type="module" src="js/main.js"></script>
+
+    <!-- 【新增】接管项目的数据大屏外壳 (低耦合，通过事件抛出拿到需要的数据) -->
+    <script type="module" src="DataScreen/js/dashboard.js"></script>
+</body>
+
+</html>

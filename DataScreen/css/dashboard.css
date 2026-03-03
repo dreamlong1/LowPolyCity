@@ -1,0 +1,178 @@
+/* ==========================================
+   数据大屏专属样式表 (dashboard.css)
+   ========================================== */
+
+/* 让大屏层绝对定位于所有 3D 渲染画面之上，并且事件穿透
+   保证不影响背后 Scene 的轨道控制器工作，只在具体的面板上恢复事件接收 */
+#dashboard-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ==================
+   顶部标题
+   ================== */
+.dash-header {
+    text-align: center;
+    background: linear-gradient(180deg, rgba(5, 12, 30, 0.9) 0%, rgba(5, 12, 30, 0) 100%);
+    padding: 15px 0 30px 0;
+    color: #7df9ff;
+    text-shadow: 0 0 10px rgba(125, 249, 255, 0.8);
+    border-top: 3px solid #7df9ff;
+    box-shadow: inset 0 20px 40px -20px rgba(125, 249, 255, 0.3);
+}
+
+.dash-header h1 {
+    margin: 0;
+    font-size: 26px;
+    letter-spacing: 4px;
+    font-weight: 700;
+}
+
+.dash-header p {
+    margin: 5px 0 0 0;
+    font-size: 12px;
+    color: rgba(180, 220, 255, 0.7);
+    letter-spacing: 2px;
+}
+
+/* ==================
+   两侧面板容器
+   ================== */
+.dash-body {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px 20px 20px;
+}
+
+.panel-side {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 带有科技感外框的图表容器 */
+.chart-box {
+    flex: 1;
+    background: rgba(8, 15, 30, 0.65);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(125, 249, 255, 0.25);
+    box-shadow: 0 0 15px rgba(0, 50, 80, 0.5), inset 0 0 20px rgba(125, 249, 255, 0.05);
+    border-radius: 4px;
+    padding: 15px;
+    position: relative;
+    pointer-events: auto;
+    /* 在面板内恢复鼠标事件以便交互图表 */
+}
+
+/* 科技感装饰边角 */
+.chart-box::before,
+.chart-box::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: 2px solid transparent;
+    pointer-events: none;
+}
+
+.chart-box::before {
+    top: -1px;
+    left: -1px;
+    border-top-color: #7df9ff;
+    border-left-color: #7df9ff;
+}
+
+.chart-box::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom-color: #7df9ff;
+    border-right-color: #7df9ff;
+}
+
+.box-title {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border-left: 3px solid #7df9ff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.chart-content {
+    width: 100%;
+    height: calc(100% - 25px);
+    /* 减去 title 的高度 */
+}
+
+/* ==================
+   大屏显隐控制按钮
+   ================== */
+#toggle-dashboard {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    z-index: 200;
+    pointer-events: auto;
+    background: rgba(8, 15, 30, 0.65);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(125, 249, 255, 0.4);
+    color: #7df9ff;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(125, 249, 255, 0.1);
+    user-select: none;
+}
+
+#toggle-dashboard:hover {
+    background: rgba(125, 249, 255, 0.15);
+    box-shadow: 0 0 15px rgba(125, 249, 255, 0.4);
+}
+
+#toggle-dashboard:active {
+    transform: scale(0.95);
+}
+
+/* 隐藏整个数字大屏的工具类 */
+.dash-hidden {
+    opacity: 0;
+    pointer-events: none !important;
+}
+
+/* 按钮潜伏隐身类：彻底藏匿自己，达成纯粹沉浸模式，唯有鼠标探寻时浮现 */
+#toggle-dashboard.btn-stealth {
+    opacity: 0.15;
+    background: transparent;
+    border-color: rgba(125, 249, 255, 0.1);
+    color: rgba(125, 249, 255, 0.4);
+    box-shadow: none;
+    backdrop-filter: none;
+}
+
+#toggle-dashboard.btn-stealth:hover {
+    opacity: 1;
+    background: rgba(8, 15, 30, 0.65);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(125, 249, 255, 0.4);
+    color: #7df9ff;
+    box-shadow: 0 0 15px rgba(125, 249, 255, 0.4);
+}
+
+/* 使原本的大屏层支持透明度缓动动画 */
+#dashboard-layer {
+    transition: opacity 0.4s ease;
+}
